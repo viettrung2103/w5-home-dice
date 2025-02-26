@@ -34,7 +34,7 @@ class DiceTest {
     }
 
     @Test
-    @DisplayName("Get value of die 1")
+    @DisplayName("Get value of die 1 now")
     void getDie1() {
         dice.roll();
         int die1 = dice.getDie1();
