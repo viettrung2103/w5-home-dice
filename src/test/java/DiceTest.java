@@ -43,7 +43,7 @@ class DiceTest {
     }
 
     @Test
-    @DisplayName("Get value of die 2")
+    @DisplayName("Get value of die 2 now")
     void getDie2() {
         dice.roll();
         int die2 = dice.getDie2();
