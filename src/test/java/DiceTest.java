@@ -1,7 +1,7 @@
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,12 +9,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class DiceTest {
 
     public Dice dice;
+    // create a output Stream to store to print
+    private final ByteArrayOutputStream outputStringStream = new ByteArrayOutputStream();
+    // save the origin print out source, so I can restore the print out source later
+    // now, the printout source is save to outContent
+    private final PrintStream originalOut = System.out;
+
 
     @BeforeEach
     void setup() {
         dice = new Dice();
+        System.setOut(new PrintStream(outputStringStream));
 
     }
+
 
     @Test
     void isDouble() {
@@ -60,7 +68,18 @@ class DiceTest {
         assertTrue(die2 != 0, "Value of die 1 should be different than 0 after rolling");
         assertTrue(dice.isDouble(), "value of die1 should be equal to value of die 2");
         assertTrue(dice.getRollCounts() != 0, "value of roll counts should be more than 0 after rolling");
+    }
 
+    @Test
+    void DisplayRollMessage() {
+        dice.roll();
+        String expectPartOfPrintMessage = "After";
+        assertTrue(outputStringStream.toString().contains(expectPartOfPrintMessage), "the final message should contain \"After\" keyword");
+    }
+
+    @AfterEach
+    void restorePrintStream() {
+        System.setOut(originalOut);
     }
 
 }
